@@ -362,8 +362,8 @@ h1 {
 
 .brewery-card img {
   width: 100%;
-  max-width: 800px;
-  max-height: 400px;
+  max-width: 1000px;
+  max-height: 500px;
   margin: 0 auto;
   object-fit: contain;
 }
