@@ -63,8 +63,9 @@ body::after {
   grid-template-columns: minmax(320px, 460px) minmax(360px, 720px);
   grid-template-areas:
     "art art"
-    "schedule breweries"
-    ". participate";
+    "schedule schedule"
+    "friends friends"
+    "participate participate";
   gap: 2rem;
   align-items: start;
   min-height: 100vh;
@@ -101,9 +102,7 @@ h1 {
 }
 
 .lede,
-.info-strip,
-.schedule-copy,
-.section-intro {
+.info-strip {
   font-size: 1.05rem;
   line-height: 1.6;
 }
@@ -112,39 +111,192 @@ h1 {
   margin: 1.5rem 0 0;
   font-size: 1.2rem;
   font-weight: 700;
-  max-width: 22ch;
+  max-width: 48ch;
 }
 
 .schedule-module {
-  display: grid;
-  gap: 1rem;
   margin-top: 1.75rem;
-  padding: 1.25rem;
+  overflow: hidden;
+  padding: 0.75rem;
   border-radius: 24px;
   background: linear-gradient(135deg, rgba(255, 241, 206, 0.92), rgba(255, 227, 164, 0.76));
   border: 1px solid rgba(180, 113, 36, 0.18);
 }
 
-.schedule-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: fit-content;
-  min-width: 5rem;
-  padding: 0.55rem 0.95rem;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #b44112, #dc6a1d 55%, #f0b040);
+.schedule-grid-wrap {
+  overflow-x: auto;
+  border-radius: 18px;
+}
+
+.schedule-grid {
+  width: 100%;
+  min-width: 1080px;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  color: var(--espresso);
+}
+
+.schedule-grid caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.brewery-column {
+  width: 260px;
+}
+
+.day-column {
+  width: calc((100% - 260px) / 7);
+}
+
+.schedule-grid th,
+.schedule-grid td {
+  min-width: 96px;
+  padding: 0.85rem;
+  border-right: 1px solid rgba(112, 67, 31, 0.14);
+  border-bottom: 1px solid rgba(112, 67, 31, 0.14);
+  background: rgba(255, 252, 246, 0.78);
+  vertical-align: top;
+}
+
+.schedule-grid th:first-child,
+.schedule-grid td:first-child {
+  min-width: 260px;
+}
+
+.schedule-grid thead th {
+  background: rgba(126, 63, 21, 0.92);
   color: var(--foam);
-  font-size: 0.9rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-align: center;
   text-transform: uppercase;
 }
 
-.schedule-copy {
-  margin: 0;
-  max-width: 34ch;
-  color: rgba(36, 20, 13, 0.82);
+.schedule-grid tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  padding: 0.5rem;
+  background: rgba(255, 248, 236, 0.98);
+  text-align: center;
+}
+
+.schedule-brewery-link {
+  display: grid;
+  gap: 0.75rem;
+  place-items: center;
+  color: var(--espresso);
+  text-decoration: none;
+}
+
+.schedule-brewery-link:hover span,
+.schedule-brewery-link:focus-visible span {
+  color: #b44112;
+}
+
+.schedule-brewery-link:focus-visible {
+  border-radius: 12px;
+  outline: 3px solid rgba(180, 65, 18, 0.35);
+  outline-offset: 5px;
+}
+
+.schedule-grid tbody th img {
+  display: block;
+  width: 100%;
+  max-width: 330px;
+  max-height: 205px;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.schedule-grid tbody th span {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.schedule-grid tbody td {
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: rgba(36, 20, 13, 0.58);
+}
+
+.schedule-note-row {
+  height: 1.7rem;
+}
+
+.schedule-week-note {
+  height: 1.7rem;
+  padding: 0.3rem 0.85rem;
+  background: rgba(255, 239, 197, 0.9);
+  text-align: center;
+  color: var(--brown);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.schedule-event {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.partner-logo {
+  display: block;
+  width: 100%;
+  max-width: 120px;
+  max-height: 72px;
+  object-fit: contain;
+}
+
+.schedule-event-link {
+  color: #9f340f;
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.18em;
+}
+
+.schedule-event-link:hover,
+.schedule-event-link:focus-visible {
+  color: #6f2208;
+}
+
+.schedule-grid thead th:first-child {
+  border-top-left-radius: 14px;
+}
+
+.schedule-grid thead th:last-child {
+  border-top-right-radius: 14px;
+}
+
+.schedule-grid tbody tr:last-child th:first-child {
+  border-bottom-left-radius: 14px;
+}
+
+.schedule-grid tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 14px;
+}
+
+.schedule-grid th:last-child,
+.schedule-grid td:last-child {
+  border-right: 0;
+}
+
+.schedule-grid tbody tr:last-child th,
+.schedule-grid tbody tr:last-child td {
+  border-bottom: 0;
 }
 
 .primary-link,
@@ -246,6 +398,42 @@ h1 {
   max-height: none;
 }
 
+.friends-card {
+  grid-area: friends;
+  position: relative;
+  z-index: 1;
+  padding: 1.8rem 2rem;
+  border-radius: 28px;
+  background: rgba(255, 251, 243, 0.92);
+  border: 1px solid rgba(112, 67, 31, 0.12);
+  box-shadow: var(--shadow);
+}
+
+.friends-card h2 {
+  margin: 0;
+  font-family: "Cooper Black", "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+  font-size: clamp(1.8rem, 3.2vw, 3rem);
+  line-height: 1;
+}
+
+.friends-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.friends-list li {
+  padding: 0.65rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 239, 197, 0.86);
+  color: var(--brown);
+  font-weight: 900;
+  line-height: 1.2;
+}
+
 .participate-card {
   grid-area: participate;
   position: relative;
@@ -294,105 +482,13 @@ h1 {
   line-height: 1.65;
 }
 
-.breweries-card {
-  grid-area: breweries;
-  position: relative;
-  z-index: 1;
-  align-self: start;
-  padding: 1.8rem 2rem;
-  border-radius: 28px;
-  background: rgba(255, 251, 243, 0.92);
-  border: 1px solid rgba(112, 67, 31, 0.12);
-  box-shadow: var(--shadow);
-}
-
-.section-heading {
-  max-width: 32rem;
-}
-
-.section-heading h2 {
-  margin: 0;
-  font-family: "Cooper Black", "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
-  font-size: clamp(2rem, 4vw, 3.4rem);
-  line-height: 0.98;
-}
-
-.section-intro {
-  margin: 1rem 0 0;
-  color: rgba(36, 20, 13, 0.8);
-}
-
-.brewery-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-  margin-top: 1.75rem;
-}
-
-.brewery-card {
-  display: grid;
-  gap: 0.9rem;
-  align-content: center;
-  min-height: 220px;
-  padding: 1.25rem;
-  border-radius: 24px;
-  background: linear-gradient(180deg, rgba(255, 248, 233, 0.98), rgba(255, 243, 215, 0.9));
-  border: 1px solid rgba(112, 67, 31, 0.12);
-  color: var(--espresso);
-  text-decoration: none;
-  text-align: center;
-  box-shadow: 0 16px 32px rgba(85, 44, 16, 0.08);
-  transition:
-    transform 180ms ease,
-    box-shadow 180ms ease,
-    border-color 180ms ease;
-}
-
-.brewery-card:hover,
-.brewery-card:focus-visible {
-  transform: translateY(-3px);
-  border-color: rgba(180, 113, 36, 0.28);
-  box-shadow: 0 22px 38px rgba(85, 44, 16, 0.14);
-}
-
-.brewery-card:focus-visible {
-  outline: 3px solid rgba(255, 255, 255, 0.7);
-  outline-offset: 3px;
-}
-
-.brewery-card img {
-  width: 100%;
-  max-width: 1000px;
-  max-height: 500px;
-  margin: 0 auto;
-  object-fit: contain;
-}
-
-.brewery-logo-slot {
-  display: grid;
-  place-items: center;
-  min-height: 100px;
-  border-radius: 18px;
-  border: 2px dashed rgba(180, 113, 36, 0.3);
-  background: rgba(255, 255, 255, 0.5);
-  color: rgba(112, 67, 31, 0.72);
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.brewery-name {
-  font-weight: 800;
-  line-height: 1.3;
-}
-
 @media (max-width: 980px) {
   .page-shell {
     grid-template-columns: 1fr;
     grid-template-areas:
       "art"
       "schedule"
-      "breweries"
+      "friends"
       "participate";
     max-width: 760px;
     margin: 0 auto;
@@ -401,13 +497,9 @@ h1 {
 
   .hero-art,
   .schedule-card,
-  .participate-card,
-  .breweries-card {
+  .friends-card,
+  .participate-card {
     min-height: auto;
-  }
-
-  .brewery-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -427,25 +519,19 @@ h1 {
     border-radius: 24px;
   }
 
-  .breweries-card {
+  .friends-card {
     padding: 1.5rem;
     border-radius: 24px;
   }
 
   .lede,
   .info-strip,
-  .schedule-copy,
-  .participate-card p,
-  .section-intro {
+  .participate-card p {
     font-size: 1rem;
   }
 
   .hero-art img {
     border-radius: 28px;
-  }
-
-  .brewery-grid {
-    grid-template-columns: 1fr;
   }
 
   .primary-link,
